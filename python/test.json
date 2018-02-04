@@ -1,0 +1,20 @@
+[
+	{
+		"age": 34,
+		"eyeColor": "green",
+		"name": "Rhoda",
+		"favoriteFruit": "strawberry"
+	},
+	{
+		"age": 39,
+		"eyeColor": "green",
+		"name": "Bernadette",
+		"favoriteFruit": "apple"
+	},
+	{
+		"age": 20,
+		"eyeColor": "green",
+		"name": "Janell",
+		"favoriteFruit": "banana"
+	}
+]
