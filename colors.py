@@ -6,7 +6,8 @@ import io
 from colorthief import ColorThief
 from colour import Color
 
-fd = urlopen('http://lokeshdhakar.com/projects/color-thief/img/photo1.jpg')
+# fd = urlopen('http://lokeshdhakar.com/projects/color-thief/img/photo1.jpg')
+fd = open('../../Downloads/luleti.jpg')
 f = io.BytesIO(fd.read())
 color_thief = ColorThief(f)
 # r,g,b = color_thief.get_color(quality=1)
