@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
-import scrapy
-import csv
+import scrapy, csv, os, time, urllib, hashlib
+
+from urllib.request import urlretrieve
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait # available since 2.4.0
 from selenium.webdriver.support import expected_conditions as EC
 
+MAX_RETRIES = 10
 
 class PinterestSpider(scrapy.Spider):
   name = 'pinterest'
@@ -38,16 +41,24 @@ class PinterestSpider(scrapy.Spider):
   # Parse function: Scrape the webpage and store it
   def parse(self, response):
       self.driver.get(response.url)
-      # Output filenamedoc
-      filename = "angular_data.csv"
-      with open(filename, 'a+') as f:
-          writer = csv.writer(f)
-          # Selector for all the names from the link with class 'ng-binding'
-          wait = WebDriverWait(self.driver, 10)
-          pg = wait.until(EC.presence_of_element_located((By.XPATH, "//img")))
-          names = self.driver.find_elements_by_css_selector("img")
-          for name in names:
-              print(name.get_attribute("src"))
-              title = name.text
-              writer.writerow([title])
-      self.log('Saved file %s' % filename)
+
+      wait = WebDriverWait(self.driver, 10)
+      pg = wait.until(EC.presence_of_element_located((By.XPATH, "//img")))
+
+      for i in range(0, 7):
+        for i in range(0, 10):
+          self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+          time.sleep(3)
+        selenium_images = self.driver.find_elements_by_css_selector("img")
+        images = []
+        for image in selenium_images:
+            images.append(image)
+        self.download_images(images)
+
+  def download_images(self, images):
+    for image in images:
+      if not os.path.exists('/crawler/downloads'):
+          os.makedirs('/crawler/downloads')
+      hash = hashlib.sha1(image.get_attribute("src").encode("UTF-8")).hexdigest()
+      # image_name = image.get_attribute("alt").replace(" ", "").replace("/", "").replace(".", "").replace(",", "")
+      urlretrieve(image.get_attribute("src"), "/crawler/downloads/" + hash + ".png")
