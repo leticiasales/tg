@@ -1,0 +1,13 @@
+argcomplete==1.8.2
+asn1crypto==0.24.0
+attrs==18.2.0
+Automat==0.7.0
+backcall==0.1.0
+beautifulsoup4==4.5.3
+bs4==0.0.1
+requests==2.21.0
+schedule==0.6.0
+Scrapy==1.5.1
+scrapy-selenium==0.0.6
+selenium==3.141.0
+service-identity==18.1.0

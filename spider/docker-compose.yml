@@ -1,0 +1,12 @@
+version: '2'
+services:
+  crawler:
+    container_name: crawler
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/crawler
+    ports:
+      - "6800:6800"
+    command: bash -c "while [ true ]; do sleep 10; done"
